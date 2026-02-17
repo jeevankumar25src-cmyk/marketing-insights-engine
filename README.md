@@ -26,6 +26,6 @@ To solve the problem of fragmented marketing data by building an automated pipel
 [Add link after Step 8]
 
 ## 📝 How to Run
-1. Clone the repo: `git clone https://github.com/YOUR_USERNAME/marketing-insights-engine.git`
+1. Clone the repo: `git clone (https://github.com/jeevankumar25src-cmyk/marketing-insights-engine)
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the app: `streamlit run app.py`
