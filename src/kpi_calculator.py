@@ -1,23 +1,24 @@
 import pandas as pd
 
 def calculate_marketing_kpis(df):
-    """
-    Calculates essential marketing metrics from raw campaign data.
-    """
-    # Avoid division by zero
-    df['CPA'] = df['Spend'] / df['Conversions'].replace(0, 1)
-    df['ROAS'] = df['Revenue'] / df['Spend'].replace(0, 1)
-    df['Conversion_Rate'] = (df['Conversions'] / df['Clicks'].replace(0, 1)) * 100
-    
-    return df[['Date', 'Campaign_Name', 'Channel', 'Spend', 'Revenue', 'CPA', 'ROAS', 'Conversion_Rate']]
+    print(df.columns)
+
+    df.columns = df.columns.str.strip().str.lower()
+
+    df['cpa'] = df['spend'] / df['conversions'].replace(0, 1)
+    df['roas'] = df['revenue'] / df['spend'].replace(0, 1)
+    df['conversion_rate'] = (df['conversions'] / df['clicks'].replace(0, 1)) * 100
+
+    return df
+
 
 def generate_summary_stats(df):
-    """Generates overall performance summary."""
     summary = {
-        'Total_Spend': df['Spend'].sum(),
-        'Total_Revenue': df['Revenue'].sum(),
-        'Total_Conversions': df['Conversions'].sum(),
-        'Avg_ROAS': df['ROAS'].mean(),
-        'Avg_CPA': df['CPA'].mean()
+        'Total_Spend': df['spend'].sum(),
+        'Total_Revenue': df['revenue'].sum(),
+        'Total_Conversions': df['conversions'].sum(),
+        'Avg_ROAS': df['roas'].mean(),
+        'Avg_CPA': df['cpa'].mean()
     }
+
     return summary

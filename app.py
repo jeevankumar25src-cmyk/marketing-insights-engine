@@ -14,7 +14,8 @@ st.markdown("**Automated KPI Tracking & ROI Analysis**")
 @st.cache_data
 def load_data():
     df = load_and_clean_data('data/raw_data_sample.csv')
-    return calculate_marketing_kpis(df)
+    df = calculate_marketing_kpis(df)
+    return df
 
 df = load_data()
 
@@ -30,25 +31,30 @@ col4.metric("Avg CPA", f"${summary['Avg_CPA']:.0f}")
 
 # Filters
 st.sidebar.header("Filters")
+
 selected_channel = st.sidebar.multiselect(
     "Select Channels",
-    options=df['Channel'].unique(),
-    default=df['Channel'].unique()
+    options=df['channel'].unique(),
+    default=df['channel'].unique()
 )
 
-filtered_df = df[df['Channel'].isin(selected_channel)]
+filtered_df = df[df['channel'].isin(selected_channel)]
 
 # Charts
 st.subheader("ROAS by Campaign")
-chart_data = filtered_df.set_index('Campaign_Name')['ROAS']
+
+chart_data = filtered_df.set_index('campaign_name')['roas']
 st.bar_chart(chart_data)
 
 # Data table
 st.subheader("Detailed KPI Table")
-st.dataframe(filtered_df.style.format({
-    'Spend': '${:,.0f}',
-    'Revenue': '${:,.0f}',
-    'CPA': '${:.0f}',
-    'ROAS': '{:.2f}x',
-    'Conversion_Rate': '{:.2f}%'
-}))
+
+st.dataframe(
+    filtered_df.style.format({
+        'spend': '${:,.0f}',
+        'revenue': '${:,.0f}',
+        'cpa': '${:.0f}',
+        'roas': '{:.2f}x',
+        'conversion_rate': '{:.2f}%'
+    })
+)
